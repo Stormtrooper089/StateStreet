@@ -35,53 +35,28 @@ public class SharedDataStructure {
         }
     }
 
-    public InputConsumer getIpc() {
-        return ipc;
-    }
-
-    public void setIpc(InputConsumer ipc) {
-        this.ipc = ipc;
-    }
-
-
     public void setup(int n) {
         if (n == 1) {
             inputToBeProcessed = new PriorityBlockingQueue<>();
             outputGenerated = new PriorityBlockingQueue<>();
             ConsumerMonitoring.addConsumer(new InputConsumer());
         }
-        if (n == 2) {
-            System.out.println(SharedDataStructure.getSharedDataStructure().getIpc());
-            ConsumerMonitoring.addConsumer(SharedDataStructure.getSharedDataStructure().getIpc());
-        }
-
     }
-
 
     public void put(Integer a) {
         inputToBeProcessed.add(a);
         start();
     }
 
-    public void put(PrimeNumber a) {
-        outputGenerated.add(a);
-    }
 
     public Integer take() throws InterruptedException {
         Integer value = inputToBeProcessed.take();
         return value;
     }
 
-    public PrimeNumber takeOutput() throws InterruptedException {
-        PrimeNumber value = outputGenerated.take();
-        return value;
-    }
 
     public void start() {
-        // System.out.println("the scheduler number of elements in list " + inputToBeProcessed.size());
         cm = ConsumerMonitoring.getConsumerList();
-        //System.out.println("the size of listener  " + cm.size());
-        //System.out.println("the size of lst  " + lst.size());
         executorService.execute(new Runnable() {
 
             @Override
@@ -92,7 +67,12 @@ public class SharedDataStructure {
                         for (ListenerTemplate listener :
                                 ConsumerMonitoring.getConsumerList()) {
                             PrimeNumber resultOfPrimeChecked = listener.invoke(input);
-                            System.out.println("the number checked is   " + resultOfPrimeChecked.getInput() + "  and it is prime  " + resultOfPrimeChecked.isPrime());
+//                            outputGenerated.clear();
+                            // outputGenerated.toString();
+                            //outputGenerated.put(resultOfPrimeChecked);
+                            //outputGenerated.put(resultOfPrimeChecked);
+                            System.out.println("NAa hai wah  " + resultOfPrimeChecked.toString());
+                            System.out.println("NAa hai wah  " + outputGenerated.size());
                         }
 
                     } catch (InterruptedException | IOException e) {

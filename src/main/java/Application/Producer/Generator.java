@@ -1,7 +1,9 @@
 package Application.Producer;
 
+import Application.Supplier.InputConsumer;
 import Application.Util.PrimeNumber;
 import Application.SharedDS.SharedDataStructure;
+import jdk.internal.util.xml.impl.Input;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -17,6 +19,11 @@ public class Generator {
 
 
     public static final int MAX_RANDOM_NUMBER = Integer.MAX_VALUE;
+    public InputConsumer ipc;
+
+    public void Generator(InputConsumer ipc) {
+        this.ipc = ipc;
+    }
     ExecutorService executorService = Executors.newSingleThreadExecutor();
     public void run() throws InterruptedException {
         setupServer();

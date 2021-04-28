@@ -13,30 +13,26 @@ public class InputConsumer implements ListenerTemplate {
     public int input;
     private Object UnknownHostException;
     private Socket socket = null;
-    private DataInputStream in = null;
-    private DataOutputStream out = null;
+    private static DataInputStream in = null;
+    private static DataOutputStream out = null;
 
     public void start() throws IOException {
         setupClient();
-        //      SharedDataStructure.getSharedDataStructure().setup(2);
-
-        //sharedQueue.setup(2);
-        //System.out.println(sharedQueue.getIpc());
-
     }
 
     private void setupClient() throws IOException {
-
-
         try {
             socket = new Socket("localhost", 63811);
             System.out.println("Connected");
 
             // takes input from terminal
             in = new DataInputStream(System.in);
-
+            System.out.println(in.toString());
             // sends output to the socket
             out = new DataOutputStream(socket.getOutputStream());
+            out.write(10);
+            out.writeBoolean(true);
+            System.out.println(out.toString());
         } catch (IOException i) {
             System.out.println(i);
         }
@@ -70,16 +66,15 @@ public class InputConsumer implements ListenerTemplate {
         PrimeNumber primeNumber = new PrimeNumber();
         primeNumber.setInput(input);
         primeNumber.setPrime(isPrime);
-        System.out.println("The prime number checked in input consumer  " + primeNumber.getInput() + "   " + primeNumber.isPrime());
-        System.out.println(in.toString());
-        writeToServer(in, out, input, isPrime);
+//        System.out.println("The prime number checked in input consumer  " + primeNumber.getInput() + "   " + primeNumber.isPrime());
+//        System.out.println("The connennsknfknsn         " +getOut());
+//        writeToServer(InputConsumer.in, InputConsumer.out, input, isPrime);
         return primeNumber;
     }
 
     private void writeToServer(DataInputStream in, DataOutputStream out, int input, boolean isPrime) {
         try {
             System.out.println("Attempting to write to server");
-
             out.writeInt(input);
             out.writeBoolean(isPrime);
         } catch (IOException e) {
@@ -101,5 +96,19 @@ public class InputConsumer implements ListenerTemplate {
         return run(input);
     }
 
+    public DataInputStream getIn() {
+        return in;
+    }
 
+    public void setIn(DataInputStream in) {
+        this.in = in;
+    }
+
+    public DataOutputStream getOut() {
+        return out;
+    }
+
+    public void setOut(DataOutputStream out) {
+        this.out = out;
+    }
 }

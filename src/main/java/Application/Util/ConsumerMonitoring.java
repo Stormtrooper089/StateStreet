@@ -13,7 +13,6 @@ public class ConsumerMonitoring {
     }
 
     public static void addConsumer(ListenerTemplate listener) {
-        System.out.println("The listener added  " + listener.toString());
         listOfConsumers.add(listener);
     }
 }
