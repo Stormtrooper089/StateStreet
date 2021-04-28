@@ -66,15 +66,11 @@ public class InputConsumer implements ListenerTemplate {
         PrimeNumber primeNumber = new PrimeNumber();
         primeNumber.setInput(input);
         primeNumber.setPrime(isPrime);
-//        System.out.println("The prime number checked in input consumer  " + primeNumber.getInput() + "   " + primeNumber.isPrime());
-//        System.out.println("The connennsknfknsn         " +getOut());
-//        writeToServer(InputConsumer.in, InputConsumer.out, input, isPrime);
         return primeNumber;
     }
 
     private void writeToServer(DataInputStream in, DataOutputStream out, int input, boolean isPrime) {
         try {
-            System.out.println("Attempting to write to server");
             out.writeInt(input);
             out.writeBoolean(isPrime);
         } catch (IOException e) {

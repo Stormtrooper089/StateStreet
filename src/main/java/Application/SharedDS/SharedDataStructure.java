@@ -67,12 +67,7 @@ public class SharedDataStructure {
                         for (ListenerTemplate listener :
                                 ConsumerMonitoring.getConsumerList()) {
                             PrimeNumber resultOfPrimeChecked = listener.invoke(input);
-//                            outputGenerated.clear();
-                            // outputGenerated.toString();
-                            //outputGenerated.put(resultOfPrimeChecked);
-                            //outputGenerated.put(resultOfPrimeChecked);
-                            System.out.println("NAa hai wah  " + resultOfPrimeChecked.toString());
-                            System.out.println("NAa hai wah  " + outputGenerated.size());
+                            System.out.println(" " + resultOfPrimeChecked.toString());
                         }
 
                     } catch (InterruptedException | IOException e) {

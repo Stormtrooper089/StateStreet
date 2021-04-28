@@ -57,7 +57,7 @@ public class Generator {
 
                 }
             });
-            //generate();
+            //
             // takes input from the client socket
             in = new DataInputStream(
                     new BufferedInputStream(socket.getInputStream()));
