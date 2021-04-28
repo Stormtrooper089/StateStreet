@@ -1,0 +1,5 @@
+// The  GeneratorRunner class in the producer package acts as a producer and the InputConsumerRunner acts as a consumer.
+Run the above two mentioned classes . First start with the server.
+Run:::::
+1. GeneratorRunner
+2. InputConsumerRunner

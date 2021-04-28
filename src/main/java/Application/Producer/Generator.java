@@ -3,7 +3,6 @@ package Application.Producer;
 import Application.Supplier.InputConsumer;
 import Application.Util.PrimeNumber;
 import Application.SharedDS.SharedDataStructure;
-import jdk.internal.util.xml.impl.Input;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -31,7 +30,7 @@ public class Generator {
     }
 
     private void setupServer() {
-        Socket socket = null;
+        Socket socket;
         ServerSocket server = null;
         DataInputStream in = null;
         DataOutputStream out = null;
