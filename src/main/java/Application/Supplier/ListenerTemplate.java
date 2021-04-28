@@ -1,6 +1,6 @@
 package Application.Supplier;
 
-import Application.PrimeNumber;
+import Application.Util.PrimeNumber;
 
 public interface ListenerTemplate {
     public PrimeNumber invoke(int k);

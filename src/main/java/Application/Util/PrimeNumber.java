@@ -1,4 +1,4 @@
-package Application;
+package Application.Util;
 
 public class PrimeNumber {
     private int input;

@@ -1,8 +1,7 @@
 package Application.SharedDS;
 
-import Application.ConsumerMonitoring;
-import Application.PrimeNumber;
-import Application.Producer.Generator;
+import Application.Util.ConsumerMonitoring;
+import Application.Util.PrimeNumber;
 import Application.Supplier.InputConsumer;
 import Application.Supplier.ListenerTemplate;
 

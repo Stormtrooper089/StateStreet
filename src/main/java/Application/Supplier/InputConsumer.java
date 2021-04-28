@@ -1,6 +1,6 @@
 package Application.Supplier;
 
-import Application.PrimeNumber;
+import Application.Util.PrimeNumber;
 import Application.SharedDS.SharedDataStructure;
 
 public class InputConsumer implements ListenerTemplate {
