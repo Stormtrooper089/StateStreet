@@ -1,5 +1,6 @@
 package Application.SharedDS;
 
+import Application.Producer.Generator;
 import Application.Util.ConsumerMonitoring;
 import Application.Util.PrimeNumber;
 import Application.Supplier.InputConsumer;
@@ -41,20 +42,16 @@ public class SharedDataStructure {
         this.ipc = ipc;
     }
 
+
     public void setup(int n) {
         if (n == 1) {
             inputToBeProcessed = new PriorityBlockingQueue<>();
             outputGenerated = new PriorityBlockingQueue<>();
-            ipc = new InputConsumer();
-            setIpc(ipc);
-            ConsumerMonitoring.addConsumer(new InputConsumer());
-            lst.add(new InputConsumer());
+            //ConsumerMonitoring.addConsumer(new InputConsumer());
         }
         if (n == 2) {
-
             System.out.println(SharedDataStructure.getSharedDataStructure().getIpc());
-            ConsumerMonitoring.addConsumer(getIpc());
-            lst.add(getIpc());
+            ConsumerMonitoring.addConsumer(SharedDataStructure.getSharedDataStructure().getIpc());
         }
 
     }

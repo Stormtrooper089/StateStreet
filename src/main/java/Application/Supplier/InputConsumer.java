@@ -3,16 +3,64 @@ package Application.Supplier;
 import Application.Util.PrimeNumber;
 import Application.SharedDS.SharedDataStructure;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 public class InputConsumer implements ListenerTemplate {
 
     public int input;
+    private Object UnknownHostException;
 
-    public void start() {
+    public void start() throws IOException {
+        setupClient();
         SharedDataStructure.getSharedDataStructure().setup(2);
 
         //sharedQueue.setup(2);
         //System.out.println(sharedQueue.getIpc());
 
+    }
+
+    private void setupClient() throws IOException {
+        Socket socket = null;
+        DataInputStream input = null;
+        DataOutputStream out = null;
+
+        try {
+            socket = new Socket("localhost", 63811);
+            System.out.println("Connected");
+
+            // takes input from terminal
+            input = new DataInputStream(System.in);
+
+            // sends output to the socket
+            out = new DataOutputStream(socket.getOutputStream());
+        } catch (IOException i) {
+            System.out.println(i);
+        }
+
+        // string to read message from input
+        String line = "";
+
+        // keep reading until "Over" is input
+        while (!line.equals("Over")) {
+            try {
+                line = input.readLine();
+                out.writeUTF(line);
+            } catch (IOException i) {
+                System.out.println(i);
+            }
+        }
+
+        // close the connection
+        try {
+            input.close();
+            out.close();
+            socket.close();
+        } catch (IOException i) {
+            System.out.println(i);
+        }
     }
 
 
