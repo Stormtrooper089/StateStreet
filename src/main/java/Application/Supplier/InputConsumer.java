@@ -45,14 +45,14 @@ public class InputConsumer implements ListenerTemplate {
         String line = "";
 
         // keep reading until "Over" is input
-        while (!line.equals("Over")) {
+        while (true) {
             try {
                 line = in.readLine();
                 out.writeUTF(line);
             } catch (IOException i) {
                 System.out.println(i);
             }
-        }
+
 
         // close the connection
         try {
@@ -62,6 +62,7 @@ public class InputConsumer implements ListenerTemplate {
         } catch (IOException i) {
             System.out.println(i);
         }
+        }
     }
 
     public PrimeNumber run(int input) throws IOException {
@@ -70,6 +71,7 @@ public class InputConsumer implements ListenerTemplate {
         primeNumber.setInput(input);
         primeNumber.setPrime(isPrime);
         System.out.println("The prime number checked in input consumer  " + primeNumber.getInput() + "   " + primeNumber.isPrime());
+        System.out.println(in.toString());
         writeToServer(in, out, input, isPrime);
         return primeNumber;
     }

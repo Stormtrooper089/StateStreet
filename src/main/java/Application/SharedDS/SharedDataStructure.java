@@ -89,15 +89,10 @@ public class SharedDataStructure {
                 while (!inputToBeProcessed.isEmpty()) {
                     try {
                         Integer input = inputToBeProcessed.take();
-                        //Runnable r = new InputConsumer(input,outputGenerated);
-                        //new Thread(r).start();
                         for (ListenerTemplate listener :
                                 ConsumerMonitoring.getConsumerList()) {
-                            System.out.println("Listener jinda hai ");
                             PrimeNumber resultOfPrimeChecked = listener.invoke(input);
                             System.out.println("the number checked is   " + resultOfPrimeChecked.getInput() + "  and it is prime  " + resultOfPrimeChecked.isPrime());
-                            //outputGenerated.put(resultOfPrimeChecked);
-                            //System.out.println("Kitna banaya hai   " + outputGenerated.size());
                         }
 
                     } catch (InterruptedException | IOException e) {
