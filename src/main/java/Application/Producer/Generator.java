@@ -5,26 +5,31 @@ import Application.SharedDS.SharedDataStructure;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
+
 public class Generator {
 
 
-    private SharedDataStructure sharedQueue;
-
+    public static final int MAX_RANDOM_NUMBER = Integer.MAX_VALUE;
     public void run() throws InterruptedException {
-        sharedQueue = SharedDataStructure.getSharedDataStructure();
+
         //System.out.println("dfbhbsbskbvfvk"  + sharedQueue);
+
+
         setupServer();
 
-        receive();
+        //receive();
     }
 
     private void setupServer() {
         Socket socket = null;
         ServerSocket server = null;
         DataInputStream in = null;
+        DataOutputStream out = null;
         try {
             server = new ServerSocket(63811);
             System.out.println("Server started");
@@ -33,22 +38,26 @@ public class Generator {
 
             socket = server.accept();
             System.out.println("Client accepted");
-            generate();
+            //generate();
             // takes input from the client socket
             in = new DataInputStream(
                     new BufferedInputStream(socket.getInputStream()));
 
             String line = "";
-
+            new Thread(new RandommGenerator()).start();
             // reads message from client until "Over" is sent
-            while (!line.equals("Over")) {
-                try {
-                    line = in.readUTF();
-                    System.out.println(line);
-
-                } catch (IOException i) {
-                    System.out.println(i);
+            try {
+                //out.writeInt(1);
+                System.out.println("Yaha kabhi aya kya      ");
+                int number = in.readInt(); // wait until response arrives
+                if (number != 0) {
+                    throw new RuntimeException("verification check failed"); // FIXME: improve
                 }
+                boolean isPrime = in.readBoolean();
+
+                //return new PrimeResult(number, isPrime);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
             System.out.println("Closing connection");
 
@@ -61,16 +70,18 @@ public class Generator {
 
     }
 
-    public void generate() {
-        int j = 2;
-        sharedQueue.setup(1);
-        sharedQueue.start();
-        while (true) {
-            // System.out.println("dfbhbsbskbvfvk "  +  j);
-            sharedQueue.put(j);
-            j++;
+    class RandommGenerator implements Runnable {
+        private final Random randomGenerator = new Random();
+        SharedDataStructure sharedQueue = SharedDataStructure.getSharedDataStructure();
+
+        @Override
+        public void run() {
+            sharedQueue.setup(1);
+            while (true) {
+                int randomInt = Math.abs(randomGenerator.nextInt(MAX_RANDOM_NUMBER));
+                sharedQueue.put(randomInt);
+            }
         }
-    }
 
     public void receive() throws InterruptedException {
         System.out.println("yaha aaugjo ");
@@ -79,5 +90,6 @@ public class Generator {
             number.toString();
             System.out.println(number.isPrime() + "  " + "     jfdbjdsbdks");
         }
+    }
     }
 }

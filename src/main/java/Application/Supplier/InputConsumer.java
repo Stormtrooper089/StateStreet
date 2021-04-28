@@ -12,10 +12,13 @@ public class InputConsumer implements ListenerTemplate {
 
     public int input;
     private Object UnknownHostException;
+    private Socket socket = null;
+    private DataInputStream in = null;
+    private DataOutputStream out = null;
 
     public void start() throws IOException {
         setupClient();
-        SharedDataStructure.getSharedDataStructure().setup(2);
+        //      SharedDataStructure.getSharedDataStructure().setup(2);
 
         //sharedQueue.setup(2);
         //System.out.println(sharedQueue.getIpc());
@@ -23,16 +26,14 @@ public class InputConsumer implements ListenerTemplate {
     }
 
     private void setupClient() throws IOException {
-        Socket socket = null;
-        DataInputStream input = null;
-        DataOutputStream out = null;
+
 
         try {
             socket = new Socket("localhost", 63811);
             System.out.println("Connected");
 
             // takes input from terminal
-            input = new DataInputStream(System.in);
+            in = new DataInputStream(System.in);
 
             // sends output to the socket
             out = new DataOutputStream(socket.getOutputStream());
@@ -46,7 +47,7 @@ public class InputConsumer implements ListenerTemplate {
         // keep reading until "Over" is input
         while (!line.equals("Over")) {
             try {
-                line = input.readLine();
+                line = in.readLine();
                 out.writeUTF(line);
             } catch (IOException i) {
                 System.out.println(i);
@@ -55,7 +56,7 @@ public class InputConsumer implements ListenerTemplate {
 
         // close the connection
         try {
-            input.close();
+            in.close();
             out.close();
             socket.close();
         } catch (IOException i) {
@@ -63,14 +64,25 @@ public class InputConsumer implements ListenerTemplate {
         }
     }
 
-
-    public PrimeNumber run(int input) {
+    public PrimeNumber run(int input) throws IOException {
         boolean isPrime = evaluateIfPrime(input);
         PrimeNumber primeNumber = new PrimeNumber();
         primeNumber.setInput(input);
         primeNumber.setPrime(isPrime);
-        //System.out.println("The prime number checked is  " + primeNumber.getInput()  + "   " + primeNumber.isPrime());
+        System.out.println("The prime number checked in input consumer  " + primeNumber.getInput() + "   " + primeNumber.isPrime());
+        writeToServer(in, out, input, isPrime);
         return primeNumber;
+    }
+
+    private void writeToServer(DataInputStream in, DataOutputStream out, int input, boolean isPrime) {
+        try {
+            System.out.println("Attempting to write to server");
+
+            out.writeInt(input);
+            out.writeBoolean(isPrime);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean evaluateIfPrime(int n) {
@@ -83,7 +95,7 @@ public class InputConsumer implements ListenerTemplate {
     }
 
     @Override
-    public PrimeNumber invoke(int input) {
+    public PrimeNumber invoke(int input) throws IOException {
         return run(input);
     }
 
