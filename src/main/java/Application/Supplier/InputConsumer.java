@@ -1,8 +1,7 @@
-package Application;
+package Application.Supplier;
 
-import java.sql.Time;
-import java.util.Calendar;
-import java.util.concurrent.PriorityBlockingQueue;
+import Application.PrimeNumber;
+import Application.SharedDS.SharedDataStructure;
 
 public class InputConsumer implements ListenerTemplate {
 

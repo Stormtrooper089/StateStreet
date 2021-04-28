@@ -1,4 +1,7 @@
-package Application;
+package Application.Producer;
+
+import Application.PrimeNumber;
+import Application.SharedDS.SharedDataStructure;
 
 public class Generator {
 

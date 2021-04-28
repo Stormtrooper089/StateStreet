@@ -1,4 +1,10 @@
-package Application;
+package Application.SharedDS;
+
+import Application.ConsumerMonitoring;
+import Application.PrimeNumber;
+import Application.Producer.Generator;
+import Application.Supplier.InputConsumer;
+import Application.Supplier.ListenerTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +48,12 @@ public class SharedDataStructure {
             outputGenerated = new PriorityBlockingQueue<>();
             ipc = new InputConsumer();
             setIpc(ipc);
-//            ConsumerMonitoring.addConsumer(new InputConsumer());
-//            lst.add(new InputConsumer());
+            ConsumerMonitoring.addConsumer(new InputConsumer());
+            lst.add(new InputConsumer());
         }
         if (n == 2) {
+
+            System.out.println(SharedDataStructure.getSharedDataStructure().getIpc());
             ConsumerMonitoring.addConsumer(getIpc());
             lst.add(getIpc());
         }

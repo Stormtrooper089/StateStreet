@@ -1,4 +1,6 @@
-package Application;
+package Application.Supplier;
+
+import Application.Supplier.InputConsumer;
 
 public class InputConsumerRunner {
     public static void main(String[] args) throws InterruptedException {
